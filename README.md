@@ -208,6 +208,10 @@ anyway (CI does this automatically via `github.run_id`), pass a changing `IMMICH
 IMMICH_REFRESH=$(date +%s) docker compose build
 ```
 
+Published images are **multi-architecture** (`linux/amd64` and `linux/arm64`), so Apple Silicon
+Macs pull a native `arm64` image. Locally, `docker build` / `docker compose build` produce an image
+for the host architecture automatically.
+
 ### CLI helpers
 
 ```bash
@@ -392,11 +396,13 @@ The repository ships GitHub Actions workflows:
 
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — on pushes and pull requests: type-check,
   generate + build (Node 20 and 22), verify the committed manifest is current, run tests, produce an
-  npm tarball artifact, and build the Docker image without pushing.
+  npm tarball artifact, and build the Docker image (amd64 + arm64) without pushing.
 - [`.github/workflows/docker.yml`](.github/workflows/docker.yml) — on pushes to `main` and `v*` tags,
-  builds and publishes the image to the GitHub Container Registry (`ghcr.io/<owner>/<repo>`). Every
-  build refreshes the Immich API definitions; a manual run accepts an optional `immich_sdk_version`
-  input to publish an image built against a specific Immich SDK/API version.
+  builds and publishes a **multi-architecture** image (`linux/amd64` and `linux/arm64`, so Apple
+  Silicon Macs get a native arm64 image) to the GitHub Container Registry
+  (`ghcr.io/<owner>/<repo>`). Every build refreshes the Immich API definitions; a manual run accepts
+  an optional `immich_sdk_version` input to publish an image built against a specific Immich SDK/API
+  version.
 
 The same checks locally:
 

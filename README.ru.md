@@ -214,6 +214,10 @@ Docker кэширует слои, поэтому скачивание повто
 IMMICH_REFRESH=$(date +%s) docker compose build
 ```
 
+Публикуемые образы **мультиархитектурные** (`linux/amd64` и `linux/arm64`), поэтому на Apple
+Silicon Mac скачивается нативный `arm64`-образ. Локально `docker build` / `docker compose build`
+автоматически собирают образ под архитектуру хоста.
+
 ### CLI-помощники
 
 ```bash
@@ -401,11 +405,13 @@ npm run typecheck    # проверка типов без эмита
 
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — на push/PR: проверка типов, генерация и
   сборка (Node 20 и 22), проверка актуальности манифеста, тесты, сборка npm-тарбола (артефакт) и
-  сборка Docker-образа без публикации.
+  сборка Docker-образа (amd64 + arm64) без публикации.
 - [`.github/workflows/docker.yml`](.github/workflows/docker.yml) — при push в `main` и по тегам
-  `v*` собирает и публикует образ в GitHub Container Registry (`ghcr.io/<owner>/<repo>`). Каждая
-  сборка обновляет определения API Immich; при ручном запуске можно задать вход
-  `immich_sdk_version`, чтобы опубликовать образ под конкретную версию Immich SDK/API.
+  `v*` собирает и публикует **мультиархитектурный** образ (`linux/amd64` и `linux/arm64`, поэтому на
+  Apple Silicon Mac скачивается нативный arm64-образ) в GitHub Container Registry
+  (`ghcr.io/<owner>/<repo>`). Каждая сборка обновляет определения API Immich; при ручном запуске
+  можно задать вход `immich_sdk_version`, чтобы опубликовать образ под конкретную версию Immich
+  SDK/API.
 
 Локально те же проверки:
 

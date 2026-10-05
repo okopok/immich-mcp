@@ -155,8 +155,10 @@ Tool names follow `immich_<snake_case operationId>`, so renames track the spec a
 ## CI / Docker
 
 - `.github/workflows/ci.yml` on push/PR: typecheck → generate+build (Node 20 & 22) → verify the
-  manifest is current → tests → npm tarball artifact → Docker build (no push).
-- `.github/workflows/docker.yml` publishes to GHCR (`ghcr.io/<owner>/<repo>`) on `main` and `v*` tags.
+  manifest is current → tests → npm tarball artifact → Docker build (amd64 + arm64, no push).
+- `.github/workflows/docker.yml` publishes a multi-arch image (`linux/amd64`, `linux/arm64`) to GHCR
+  (`ghcr.io/<owner>/<repo>`) on `main` and `v*` tags. Both Docker jobs use `setup-qemu-action` +
+  `setup-buildx-action`; keep `platforms:` in sync when changing the Dockerfile.
 - The `Dockerfile` **refreshes the Immich spec on every build** (`node scripts/fetch-spec.mjs &&
   npm run build`). Build args:
   - `IMMICH_SDK_VERSION` — bump the SDK/spec (`latest` or a version); also updates the runtime deps.
