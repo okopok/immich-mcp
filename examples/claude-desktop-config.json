@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "immich": {
+      "command": "node",
+      "args": ["/absolute/path/to/immich-mcp/dist/index.js"],
+      "env": {
+        "IMMICH_BASE_URL": "http://localhost:2283/api",
+        "IMMICH_API_KEY": "your-immich-api-key",
+        "IMMICH_MCP_READONLY": "0"
+      }
+    }
+  }
+}

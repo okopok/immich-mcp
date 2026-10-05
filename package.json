@@ -1,0 +1,48 @@
+{
+  "name": "immich-mcp",
+  "version": "0.1.0",
+  "description": "Full-featured, open-source Model Context Protocol (MCP) server for managing an Immich instance. Auto-generated from the official Immich OpenAPI specification and built on @immich/sdk.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "immich",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "llm",
+    "self-hosted",
+    "photos",
+    "sdk"
+  ],
+  "bin": {
+    "immich-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "spec:fetch": "node scripts/fetch-spec.mjs",
+    "generate": "node scripts/generate.mjs",
+    "prebuild": "npm run generate",
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "pretest": "npm run build",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@immich/sdk": "^3.2.4",
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

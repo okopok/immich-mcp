@@ -1,0 +1,22 @@
+// OpenCode (V2) — local Immich MCP server over stdio.
+// Copy into opencode.jsonc in your project, or into ~/.config/opencode/opencode.jsonc
+// for all projects. Requires `npm run build` in the immich-mcp checkout first.
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "immich": {
+        "type": "local",
+        "command": ["node", "/absolute/path/to/immich-mcp/dist/index.js"],
+        "environment": {
+          "IMMICH_BASE_URL": "http://localhost:2283/api",
+          "IMMICH_API_KEY": "{env:IMMICH_API_KEY}",
+
+          // Optional: keep the tool surface small and safe.
+          "IMMICH_MCP_TAGS": "Assets,Albums,People,Search,Memories,Tags",
+          "IMMICH_MCP_READONLY": "0"
+        }
+      }
+    }
+  }
+}

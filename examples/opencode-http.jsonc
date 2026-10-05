@@ -1,0 +1,26 @@
+// OpenCode (V2) — remote Immich MCP server over streamable HTTP.
+//
+// Start the server first, e.g.:
+//   IMMICH_BASE_URL=http://localhost:2283/api \
+//   IMMICH_API_KEY=... \
+//   IMMICH_MCP_TRANSPORT=http \
+//   IMMICH_MCP_HTTP_AUTH_TOKEN=secret \
+//   node dist/index.js
+//
+// Then copy this into opencode.jsonc. `oauth: false` is required because this
+// server authenticates with a static bearer token instead of OAuth.
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "immich": {
+        "type": "remote",
+        "url": "http://127.0.0.1:3000/mcp",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Bearer {env:IMMICH_MCP_HTTP_AUTH_TOKEN}"
+        }
+      }
+    }
+  }
+}
